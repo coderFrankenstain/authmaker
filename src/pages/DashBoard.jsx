@@ -17,7 +17,6 @@ function DashBoardPage() {
   const [password, setPassword] = useState("");
   const [mfa, setMfa] = useState("");
   const { user, logout } = useAuth();
-  const [value, setValue] = useState("");
   const handleLogin = async (e) => {
     e.preventDefault();
   };
@@ -27,28 +26,20 @@ function DashBoardPage() {
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader>
           <CardTitle className="text-center text-xl">{user.email}</CardTitle>
+          <CardTitle className="text-center text-gray-500 mt-2">Pronton Drive</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
-            <Select value={value} onValueChange={setValue}>
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Select item" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="a">A</SelectItem>
-                <SelectItem value="b">B</SelectItem>
-              </SelectContent>
-            </Select>
             <Input
               type="email"
-              placeholder="Email"
+              placeholder="Pronton Drive Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Pronton Drive Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
