@@ -9,6 +9,7 @@ import { USER_ERROR_CODE } from "@/constants";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mfa, setMfa] = useState("");
   const { user, login } = useAuth();
 
   const handleLogin = async (e) => {
@@ -20,34 +21,35 @@ function Login() {
       await emailLogin({
         email,
         password,
+        mfa
       });
 
       try {
        let response = await getUserDetail()
-       let user = response.data.userInfo
+       let user = response.userInfo
         console.log("登录成功 ",user)
         login(user)
       }
       catch(e) {
-        console.log("登录失败")
+        console.log("登录失败 ",e )
 
       }
       //登录成功
 
     } catch (e) {
-      console.log("登录失败 ", e.response.data.code);
-      var code = e.response.data.code;
-      if (code === USER_ERROR_CODE.AccountLocked) {
-        router.push("/unlocked");
-      }
-      if (code == USER_ERROR_CODE.OtpNeedError) {
-        setIsOpen(true);
-      }
+      // console.log("登录失败 ", e.response.data.code);
+      // var code = e.response.data.code;
+      // if (code === USER_ERROR_CODE.AccountLocked) {
+      //   router.push("/unlocked");
+      // }
+      // if (code == USER_ERROR_CODE.OtpNeedError) {
+      //   setIsOpen(true);
+      // }
     }
   };
 
   return (
-    <div className="flex  items-center justify-center w-full min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center  min-h-screen p-4 w-full">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader>
           <CardTitle className="text-center text-xl">Login</CardTitle>
@@ -67,6 +69,12 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+            />
+            <Input
+              type="text"
+              placeholder="Mfa code ( Optional )"
+              value={mfa}
+              onChange={(e) => setMfa(e.target.value)}
             />
             <Button type="submit" className="w-full">
               Log In

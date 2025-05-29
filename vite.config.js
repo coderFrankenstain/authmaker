@@ -22,6 +22,14 @@ export default defineConfig(async () => ({
     port: 1420,
     strictPort: true,
     host: host || false,
+    proxy: {
+      // 代理 /api 到本地或远程服务器
+      '/api': {
+        target: 'http://localhost:8888', // 目标地址
+        changeOrigin: true,              // 修改 origin 为 target 的 origin
+        rewrite: path => path.replace(/^\/api/, '') // 去除 /api 前缀
+      }
+    },
     hmr: host
       ? {
           protocol: "ws",

@@ -1,6 +1,6 @@
 // AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
-
+import { removeToken } from '@/service/http';
 const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
 
@@ -17,7 +17,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    removeToken();
     localStorage.removeItem('user');
+
   };
 
   return (

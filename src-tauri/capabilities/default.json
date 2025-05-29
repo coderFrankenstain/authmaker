@@ -4,7 +4,12 @@
   "description": "Capability for the main window",
   "windows": ["main"],
   "permissions": [
-    "core:default",
-    "opener:default"
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "https://app.cloudslinker.com/api/*" },
+         { "url": "http://localhost:8888/*" }
+      ]
+    }
   ]
 }
