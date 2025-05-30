@@ -2,17 +2,29 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+import { Command } from "@tauri-apps/plugin-shell";
 import { useState } from "react";
-
+import { addOauth } from "@/service/command";
 
 function DashBoardPage() {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [mfa, setMfa] = useState("");
   const { user, logout } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    const args = Object.entries({
+      password,
+      username: name,
+      ...(mfa && { "2fa": mfa }), // 如果 mfa 有值就加入 mfa 字段
+    }).map(([key, value]) => `${key}=${value}`);
+
+    const token = await addOauth({
+      name,
+      type: "protondrive",
+      args,
+    });
   };
 
   return (
@@ -20,15 +32,17 @@ function DashBoardPage() {
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader>
           <CardTitle className="text-center text-xl">{user.email}</CardTitle>
-          <CardTitle className="text-center text-gray-500 mt-2">Pronton Drive</CardTitle>
+          <CardTitle className="text-center text-gray-500 mt-2">
+            Pronton Drive
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <Input
               type="email"
               placeholder="Pronton Drive Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
             <Input

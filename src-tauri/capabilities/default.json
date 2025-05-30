@@ -7,8 +7,50 @@
     {
       "identifier": "http:default",
       "allow": [
-        { "url": "https://app.cloudslinker.com/api/*" },
-         { "url": "http://localhost:8888/*" }
+        {
+          "url": "https://app.cloudslinker.com/api/*"
+        },
+        {
+          "url": "http://localhost:8888/*"
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "args": [
+           { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" }
+          ],
+          "name": "binaries/auth",
+          "sidecar": true
+        },
+         {
+          "args": [
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" },
+            { "validator": ".*" }
+          ],
+          "name": "binaries/auth",
+          "sidecar": true
+        },
+         {
+          "args": [
+           { "validator": ".*" },
+            { "validator": ".*" }
+          ],
+          "name": "binaries/auth",
+          "sidecar": true
+        }
       ]
     }
   ]
